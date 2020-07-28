@@ -19,6 +19,7 @@
         select *
         from  tbl_board
         where bno > 0
+        order by bno desc
     </select>
 
     <update id="update" parameterType="org.zzin.domain.BoardVO">

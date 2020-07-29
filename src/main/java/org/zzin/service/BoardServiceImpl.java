@@ -21,22 +21,26 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public String readPost(BoardDTO dto) {
-        return null;
+    public BoardDTO readPost(Long bno) {
+        return boardMapper.select(bno).toBoardDTO();
     }
 
     @Override
     public String registerPost(BoardDTO dto) {
-        return null;
+        int result = boardMapper.insert(dto.toBoardVO());
+        return (result>0) ? "성공":"실패";
     }
 
     @Override
     public String deletePost(BoardDTO dto) {
-        return null;
+        int result = boardMapper.delete(dto.getBno());
+        return (result>0) ? "성공" : "실패";
     }
 
     @Override
     public String modifyPost(BoardDTO dto) {
-        return null;
+        int result = boardMapper.update(dto.toBoardVO());
+
+        return (result >0 ) ? "성공" : "실패";
     }
 }

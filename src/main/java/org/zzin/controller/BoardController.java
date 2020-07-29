@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.zzin.dto.BoardDTO;
 import org.zzin.service.BoardService;
 
 import java.util.List;
@@ -32,7 +34,10 @@ public class BoardController {
     }
 
     @GetMapping("read")
-    public String getRead() {
+    public String getRead(@RequestParam Long bno, Model model) {
+
+        BoardDTO post = boardService.readPost(bno);
+        model.addAttribute("post",post);
         return "/board/read";
     }
 
@@ -41,4 +46,8 @@ public class BoardController {
         return "/board/modify";
     }
 
+    @GetMapping("register")
+    public String getRegister(){
+        return "/board/register";
+    }
 }

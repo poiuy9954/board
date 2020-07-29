@@ -13,10 +13,11 @@
             <h1>READ</h1>
         </div>
         <div class="card-body">
-            <label>No.</label><input class="form-control">
-            <label>title</label><input class="form-control">
-            <label>writer</label><input class="form-control">
-            <label>content</label><textarea class="form-control"></textarea>
+            <label>No.</label><input class="form-control" name="bno" value="<c:out value='${post.bno}'/>">
+            <label>title</label><input class="form-control" name="title" value="<c:out value='${post.title}'/>">
+            <label>writer</label><input class="form-control" name="writer" value="<c:out value='${post.writer}'/>">
+            <label>content</label>
+            <textarea class="form-control" name="content"><c:out value='${post.content}'/></textarea>
 
             <div class="card-body">
                 <button class="btn btn-primary">goList</button>
@@ -25,5 +26,21 @@
         </div>
     </div>
 </main>
+<script type="application/javascript" src="/resources/src/js/commons.js"></script>
+<script>
+    window.onload=()=>{
+        const goList = document.querySelector(".card-body>.btn-primary");
+        const modify = document.querySelector(".card-body>.btn-warning");
+        goList.addEventListener("click",()=>{
 
+        })
+        modify.addEventListener("click",()=>{
+            formCreate((form)=>{
+                form.append(document.querySelector("input[name=bno]"));
+                form.action = "/board/modify"
+                form.method = "GET";
+            })
+        })
+    }
+</script>
 <%@include file="/WEB-INF/views/includes/footer.jsp" %>

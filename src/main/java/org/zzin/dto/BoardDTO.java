@@ -1,8 +1,6 @@
 package org.zzin.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
 import org.zzin.domain.BoardVO;
 
 import java.time.LocalDateTime;
@@ -10,6 +8,8 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class BoardDTO {
 
     private Long bno;

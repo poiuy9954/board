@@ -29,7 +29,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered"  width="100%" cellspacing="0">
+                    <table class="table table-bordered" width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>bno</th>
@@ -51,7 +51,8 @@
                         <tbody>
                         <c:forEach var="post" items="${listMap}">
                             <tr>
-                                <td>
+
+                                <td class="bnos">
                                     <c:out value="${post.bno}"/>
                                 </td>
                                 <td>
@@ -90,4 +91,23 @@
         </div>
     </div>
 </main>
+<script>
+    window.onload=()=>{
+        document.querySelectorAll(".bnos").forEach((td)=>{
+            td.addEventListener("click",(e)=>{
+                console.log(e.target.innerText);
+                let form = document.createElement('form');
+                let input = document.createElement('input');
+                form.action='/board/read';
+                form.method='GET';
+                input.value=e.target.innerText;
+                input.name='bno';
+                form.append(input);
+                document.body.append(form);
+                form.submit();
+
+            })
+        });
+    }
+</script>
 <%@ include file="/WEB-INF/views/includes/footer.jsp" %>

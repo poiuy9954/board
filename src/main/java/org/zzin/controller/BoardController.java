@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 import org.zzin.dto.BoardDTO;
+import org.zzin.dto.PageDTO;
+import org.zzin.dto.PageMaker;
 import org.zzin.service.BoardService;
 
 import java.util.List;
@@ -21,10 +23,14 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("list")
-    public String getList(Model model) {
+    public String getList(PageDTO pageDTO ,Model model) {
 
-        List<Map<String,String>> mapList = boardService.getList();
+        System.out.println(pageDTO);
+        int total = boardService.getTotal(pageDTO);
+        PageMaker pageMaker = new PageMaker(pageDTO,total);
+        List<Map<String,String>> mapList = boardService.getList(pageDTO);
         model.addAttribute("listMap",mapList);
+        model.addAttribute("pageMaker",pageMaker);
         return "/board/tables";
     }
 

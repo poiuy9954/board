@@ -21,11 +21,12 @@
             <div class="card-header">
                 <i class="fas fa-table mr-1"></i>
                 DataTable Example
-                <select class="selectpicker">
-                    <option>Mustard</option>
-                    <option>Ketchup</option>
-                    <option>Relish</option>
+                <select class="selectpicker amount">
+                    <option <c:if test="${pageMaker.pageDTO.amount == 10}">selected</c:if> >10</option>
+                    <option <c:if test="${pageMaker.pageDTO.amount == 20}">selected</c:if> >20</option>
+                    <option <c:if test="${pageMaker.pageDTO.amount == 30}">selected</c:if> >30</option>
                 </select>
+                <button class="btn btn-primary">Register</button>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -74,19 +75,32 @@
                 </div>
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
+                        <c:if test="${pageMaker.prev}">
+                            <li class="page-item">
+                                <a class="page-link pageNums" href="${pageMaker.start-1}">prev</a>
+                            </li>
+                        </c:if>
+                        <c:forEach begin="${pageMaker.start}" end="${pageMaker.end}" var="num">
+                            <li class="page-item ${pageMaker.pageDTO.page == num ? 'active' : ''}">
+                                <a class="page-link pageNums" href="${num}">${num}</a>
+                            </li>
+                        </c:forEach>
+                        <c:if test="${pageMaker.next}">
+                            <li class="page-item">
+                                <a class="page-link pageNums" href="${pageMaker.end+1}">Next</a>
+                            </li>
+                        </c:if>
                     </ul>
                 </nav>
+                <div class="searchForm">
+                    <select class="selectpicker">
+                        <option>제목</option>
+                        <option>내용</option>
+                        <option>제목+내용</option>
+                    </select>&nbsp
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Search</button>
+                </div>
             </div>
         </div>
     </div>
@@ -110,6 +124,10 @@
         </div>
     </div>
 </div>
+<form class="actionForm">
+    <input type="hidden" name="page" value="${pageMaker.pageDTO.page}">
+    <input type="hidden" name="amount" value="${pageMaker.pageDTO.amount}">
+</form>
 <script
         src="https://code.jquery.com/jquery-3.5.1.js"
         integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
@@ -120,14 +138,15 @@
         const result = '<c:out value="${result}"/>';
         checkModel(result);
 
+        history.replaceState({}, null, null);
+
         function checkModel(result) {
-            if (result === '') {
+            if (result === '' || history.state) {
                 return;
             } else {
                 $(".modal-body").html(result)
             }
             $("#myModal").modal("show");
-            result='';
         }
     })
 </script>
@@ -148,6 +167,31 @@
 
             })
         });
+
+        document.querySelector(".card-header>.btn-primary")
+            .addEventListener("click", () => {
+                window.location.href = "/board/register";
+            });
+        document.querySelectorAll(".pageNums").forEach((a)=>{
+            a.addEventListener("click",(e)=>{
+                e.preventDefault();
+                let form = document.querySelector(".actionForm");
+                let pageInput = document.querySelector(".actionForm>input[name=page]");
+                form.method="GET";
+                form.action="/board/list";
+                pageInput.value=e.target.href.split("/")[4];
+                form.submit();
+            })
+        })
+        document.querySelector(".amount").addEventListener("change",(e)=>{
+            console.log(e.target.value)
+            let form = document.querySelector(".actionForm");
+            let amountInput = document.querySelector(".actionForm>input[name=amount]");
+            form.method="GET";
+            form.action="/board/list";
+            amountInput.value = e.target.value;
+            form.submit();
+        })
     }
 </script>
 <%@ include file="/WEB-INF/views/includes/footer.jsp" %>

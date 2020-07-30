@@ -9,5 +9,4 @@ public interface CRUD<V, L> {
     public int update(V v);
     public int delete(L l);
 
-    public List<Map<String,String>> getList();
 }

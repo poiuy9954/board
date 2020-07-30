@@ -13,9 +13,9 @@
             <h1>MODIFY</h1>
         </div>
         <div class="card-body">
-            <label>No.</label><input class="form-control" name="bno" value="<c:out value='${post.bno}'/>">
+            <label>No.</label><input readonly class="form-control" name="bno" value="<c:out value='${post.bno}'/>">
             <label>title</label><input class="form-control" name="title" value="<c:out value='${post.title}'/>">
-            <label>writer</label><input class="form-control" name="writer" value="<c:out value='${post.writer}'/>">
+            <label>writer</label><input readonly class="form-control" name="writer" value="<c:out value='${post.writer}'/>">
             <label>content</label>
             <textarea class="form-control" name="content"><c:out value='${post.content}'/></textarea>
 
@@ -52,7 +52,7 @@
         })
     });
     cancelBTN.addEventListener("click",()=>{
-
+        window.location.href='/board/list'
     });
 </script>
 <%@include file="/WEB-INF/views/includes/footer.jsp" %>

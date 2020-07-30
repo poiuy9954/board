@@ -13,9 +13,8 @@
             <h1>Register</h1>
         </div>
         <div class="card-body">
-            <label>No.</label><input class="form-control" name="bno" value="">
             <label>title</label><input class="form-control" name="title" value="">
-            <label>writer</label><input class="form-control" name="writer" value="">
+            <label>writer</label><input readonly class="form-control" name="writer" value="">
             <label>content</label>
             <textarea class="form-control" name="content"></textarea>
 
@@ -32,7 +31,7 @@
         const cancel = document.querySelector(".card-body>.btn-danger");
         const complete = document.querySelector(".card-body>.btn-info");
         cancel.addEventListener("click",()=>{
-
+            window.location.href='/board/list'
         })
         complete.addEventListener("click",()=>{
             formCreate((form)=>{

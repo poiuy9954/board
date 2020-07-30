@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zzin.domain.BoardVO;
+import org.zzin.dto.PageDTO;
 import org.zzin.mapper.BoardMapper;
 
 import java.util.stream.IntStream;
@@ -33,7 +34,7 @@ public class BoardMapperTests extends TestCommon {
 
     @Test
     public void getListTest() {
-        boardMapper.getList().forEach((i) -> {
+        boardMapper.getList(new PageDTO(0,10)).forEach((i) -> {
             log.info(i);
         });
     }

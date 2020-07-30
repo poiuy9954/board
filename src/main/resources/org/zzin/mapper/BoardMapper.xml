@@ -15,11 +15,28 @@
         where bno = #{l}
     </select>
 
-    <select id="getList" resultType="java.util.Map">
+    <select id="getList" resultType="java.util.Map" parameterType="org.zzin.dto.PageDTO" >
         select *
         from  tbl_board
         where bno > 0
         order by bno desc
+        limit #{skip}, #{amount}
+    </select>
+
+    <select id="getTotal" resultType="int" parameterType="org.zzin.dto.PageDTO">
+        select count(bno) from tbl_board
+        where bno > 0
+        <foreach collection="typeArr" item="type" separator="OR" open="AND (" close=")">
+            <if test='type.equals("t")'>
+                title like concat ('%', #{keyword},'%')
+            </if>
+            <if test='type.equals("c")'>
+                content like concat ('%', #{keyword},'%')
+            </if>
+            <if test='type.equals("w")'>
+                writer like concat ('%', #{keyword},'%')
+            </if>
+        </foreach>
     </select>
 
     <update id="update" parameterType="org.zzin.domain.BoardVO">

@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zzin.domain.BoardVO;
 import org.zzin.dto.BoardDTO;
+import org.zzin.dto.PageDTO;
 import org.zzin.service.BoardService;
 
 @Log4j
@@ -51,7 +52,7 @@ public class BoardServiceTests extends TestCommon {
 
     @Test
     public void serviceGetListTest(){
-        boardService.getList().forEach((i)->{
+        boardService.getList(new PageDTO(0,10)).forEach((i)->{
             log.info(i);
         });
     }

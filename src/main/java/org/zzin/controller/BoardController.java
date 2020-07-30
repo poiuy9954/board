@@ -58,7 +58,6 @@ public class BoardController {
         return new RedirectView("/board/list");
     }
 
-
     @GetMapping("register")
     public String getRegister(){
         return "/board/register";

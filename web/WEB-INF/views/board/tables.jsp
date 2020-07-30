@@ -91,17 +91,57 @@
         </div>
     </div>
 </main>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+        crossorigin="anonymous"></script>
+
 <script>
-    window.onload=()=>{
-        document.querySelectorAll(".bnos").forEach((td)=>{
-            td.addEventListener("click",(e)=>{
+    $(document).ready(function () {
+        const result = '<c:out value="${result}"/>';
+        checkModel(result);
+
+        function checkModel(result) {
+            if (result === '') {
+                return;
+            } else {
+                $(".modal-body").html(result)
+            }
+            $("#myModal").modal("show");
+            result='';
+        }
+    })
+</script>
+<script>
+    window.onload = () => {
+        document.querySelectorAll(".bnos").forEach((td) => {
+            td.addEventListener("click", (e) => {
                 console.log(e.target.innerText);
                 let form = document.createElement('form');
                 let input = document.createElement('input');
-                form.action='/board/read';
-                form.method='GET';
-                input.value=e.target.innerText;
-                input.name='bno';
+                form.action = '/board/read';
+                form.method = 'GET';
+                input.value = e.target.innerText;
+                input.name = 'bno';
                 form.append(input);
                 document.body.append(form);
                 form.submit();
